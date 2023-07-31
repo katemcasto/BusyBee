@@ -1,6 +1,8 @@
 using BusyBee.BLL;
 using BusyBee.DAL;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BusyBee.Controllers
 {
@@ -20,15 +22,13 @@ namespace BusyBee.Controllers
         [HttpGet(Name = "GetChores")]
         public IEnumerable<Chore> Get()
         {
-            List<Chore> chores = new List<Chore>();
-
-            return chores;
+            return _choresRepo.GetChores();
         }
 
         [HttpPost(Name = "AddChore")]
-        public void Add(Chore chore)
+        public int Add(Chore chore)
         {
-            _choresRepo.AddChore(chore);
+            return _choresRepo.AddChore(chore);
         }
     }
 }

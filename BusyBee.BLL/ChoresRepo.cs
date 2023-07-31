@@ -15,5 +15,12 @@ namespace BusyBee.BLL
         {
             return _choresService.AddChore(chore);
         }
+
+        public List<Chore> GetChores()
+        {
+            List<Chore> chores = _choresService.GetChores();
+
+            return chores;
+        }
     }
 }
