@@ -30,5 +30,11 @@ namespace BusyBee.Controllers
         {
             return _choresRepo.AddChore(chore);
         }
+
+        [HttpPatch(Name = "UpdateChore")]
+        public int Update(Chore chore)
+        {
+            return _choresRepo.UpdateChore(chore);
+        }
     }
 }

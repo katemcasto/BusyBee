@@ -2,6 +2,7 @@ namespace BusyBee.DAL
 {
     public class Chore
     {
+        public int Id { get; set; }
         public string? Description { get; set; }
 
         public bool Complete { get; set; }

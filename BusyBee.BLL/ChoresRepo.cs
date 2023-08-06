@@ -22,5 +22,10 @@ namespace BusyBee.BLL
 
             return chores;
         }
+
+        public int UpdateChore(Chore chore)
+        {
+            return _choresService.UpdateChore(chore);
+        }
     }
 }

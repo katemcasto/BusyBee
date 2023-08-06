@@ -18,17 +18,9 @@ namespace BusyBee.DAL
 
             try
             {
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-
-                builder.DataSource = "(local)";
-                builder.UserID = "BusyBee";
-                builder.Password = "BusyBee";
-                builder.InitialCatalog = "BusyBee";
-                builder.TrustServerCertificate = true;
-
-                using SqlConnection connection = new(builder.ConnectionString);
+                string connectionString = GetConnectionString();
+                using SqlConnection connection = new(connectionString);
                 connection.Open();
-
                 string sql = $"INSERT INTO [dbo].[Chores]\r\nVALUES ('{chore.Description}', '{chore.Complete}', '{chore.CreatedBy}', '{chore.CreatedDate}', '{chore.UpdatedBy}', '{chore.UpdatedDate}')";
 
                 using SqlCommand command = new(sql, connection);
@@ -38,7 +30,7 @@ namespace BusyBee.DAL
             }
             catch (Exception ex) 
             {
-                _logger.LogError(ex.ToString());
+                _logger.LogError(ex.Message);
 
                 return addedChores;
             }
@@ -50,15 +42,8 @@ namespace BusyBee.DAL
 
             try
             {
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-
-                builder.DataSource = "(local)";
-                builder.UserID = "BusyBee";
-                builder.Password = "BusyBee";
-                builder.InitialCatalog = "BusyBee";
-                builder.TrustServerCertificate = true;
-
-                using SqlConnection connection = new(builder.ConnectionString);
+                string connectionString = GetConnectionString();
+                using SqlConnection connection = new(connectionString);
                 connection.Open();
 
                 string sql = "SELECT *\r\n  FROM BUSYBEE.DBO.CHORES";
@@ -70,6 +55,7 @@ namespace BusyBee.DAL
                 {
                     Chore chore = new()
                     {
+                        Id = (int)reader["ID"],
                         Description = reader["Description"].ToString(),
                         Complete = (bool)reader["Complete"],
                         CreatedBy = reader["CreatedBy"].ToString(),
@@ -85,10 +71,51 @@ namespace BusyBee.DAL
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.ToString());
+                _logger.LogError(ex.Message);
  
                 return chores;
             }
+        }
+
+        public int UpdateChore(Chore chore)
+        {
+            int updatedChores = 0;
+            try
+            {
+                string connectionString = GetConnectionString();
+                using SqlConnection connection = new(connectionString);
+                connection.Open();
+                string sql = " UPDATE DBO.Chores \r\n  SET Description = @DESCRIPTION, Complete = @COMPLETE, UpdatedBy = @UPDATEDBY, UpdatedDate = @UPDATEDDATE\r\n  WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@DESCRIPTION", chore.Description);
+                command.Parameters.AddWithValue("@COMPLETE", chore.Complete);
+                command.Parameters.AddWithValue("@UPDATEDBY", chore.UpdatedBy);
+                command.Parameters.AddWithValue("@UPDATEDDATE", chore.UpdatedDate);
+                command.Parameters.AddWithValue("@ID", chore.Id);
+                updatedChores = command.ExecuteNonQuery();
+
+                return updatedChores;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return updatedChores;
+            }
+        }
+
+        private string GetConnectionString()
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+
+            builder.DataSource = "(local)";
+            builder.UserID = "BusyBee";
+            builder.Password = "BusyBee";
+            builder.InitialCatalog = "BusyBee";
+            builder.TrustServerCertificate = true;
+
+            return builder.ConnectionString;
         }
     }
 }
