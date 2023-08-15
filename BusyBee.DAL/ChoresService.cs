@@ -117,5 +117,30 @@ namespace BusyBee.DAL
 
             return builder.ConnectionString;
         }
+
+        public int DeleteChore(Chore chore)
+        {
+            int deletedChores = 0;
+
+            try
+            {
+                string connectionString = GetConnectionString();
+                using SqlConnection connection = new(connectionString);
+                connection.Open();
+                string sql = $"DELETE FROM dbo.Chores WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@ID", chore.Id);
+                deletedChores = command.ExecuteNonQuery();
+
+                return deletedChores;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return deletedChores;
+            }
+        }
     }
 }

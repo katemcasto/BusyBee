@@ -1,8 +1,6 @@
 using BusyBee.BLL;
 using BusyBee.DAL;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace BusyBee.Controllers
 {
@@ -35,6 +33,12 @@ namespace BusyBee.Controllers
         public int Update(Chore chore)
         {
             return _choresRepo.UpdateChore(chore);
+        }
+
+        [HttpDelete(Name = "DeleteChore")]
+        public int Delete(Chore chore) 
+        {
+            return _choresRepo.DeleteChore(chore);
         }
     }
 }
