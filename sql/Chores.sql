@@ -1,5 +1,9 @@
-CREATE TABLE [dbo].[Chores]( 
-   [ID] [int] IDENTITY(1,1) NOT NULL, 
+IF DB_ID('busybee') IS NULL
+	CREATE DATABASE busybee;
+
+CREATE TABLE [busybee].[dbo].[Chores]( 
+   [ID] [int] IDENTITY(1,1) NOT NULL,
+   [Name] [nvarchar](25) NOT NULL,
    [Description] [nvarchar](50) NULL,
    [Complete] [bit] NOT NULL,
    [CompletedBy] [nvarchar](20) NOT NULL,
