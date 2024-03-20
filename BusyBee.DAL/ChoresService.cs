@@ -56,8 +56,11 @@ namespace BusyBee.DAL
                     Chore chore = new()
                     {
                         Id = (int)reader["ID"],
+                        Name = reader["Name"].ToString(),
                         Description = reader["Description"].ToString(),
                         Complete = (bool)reader["Complete"],
+                        CompletedBy = reader["CompletedBy"].ToString(),
+                        CompletedDate = DateTime.Parse(reader["CompletedDate"].ToString()),
                         CreatedBy = reader["CreatedBy"].ToString(),
                         CreatedDate = DateTime.Parse(reader["CreatedDate"].ToString()),
                         UpdatedBy = reader["UpdatedBy"].ToString(),
