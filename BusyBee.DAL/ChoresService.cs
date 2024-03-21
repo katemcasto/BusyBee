@@ -121,7 +121,7 @@ namespace BusyBee.DAL
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
-            builder.DataSource = "(local)";
+            builder.DataSource = "(localdb)\\MSSQLLocalDB";
             builder.UserID = "BusyBee";
             builder.Password = "BusyBee";
             builder.InitialCatalog = "BusyBee";

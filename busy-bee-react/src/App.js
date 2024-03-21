@@ -4,6 +4,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import './App.css';
 import ChoreGrid from './ChoreGrid'
+import Calendar from './Calendar'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <header className="App-header">
         <ChoreGrid />
       </header>
+      <Calendar />
     </div>
   );
 }
