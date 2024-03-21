@@ -21,9 +21,18 @@ namespace BusyBee.DAL
                 string connectionString = GetConnectionString();
                 using SqlConnection connection = new(connectionString);
                 connection.Open();
-                string sql = $"INSERT INTO [dbo].[Chores]\r\nVALUES ('{chore.Description}', '{chore.Complete}', '{chore.CreatedBy}', '{chore.CreatedDate}', '{chore.UpdatedBy}', '{chore.UpdatedDate}')";
+                string sql = $"INSERT INTO [dbo].[Chores]\r\nVALUES (@NAME, @DESCRIPTION, @COMPLETE, @COMPLETEDBY, @COMPLETEDDATE, @CREATEDBY, @CREATEDDATE, @UPDATEDBY, @UPDATEDDATE)";
 
                 using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@NAME", chore.Name);
+                command.Parameters.AddWithValue("@DESCRIPTION", chore.Description);
+                command.Parameters.AddWithValue("@COMPLETE", chore.Complete);
+                command.Parameters.AddWithValue("@COMPLETEDBY", chore.CompletedBy);
+                command.Parameters.AddWithValue("@COMPLETEDDATE", chore.CompletedDate);
+                command.Parameters.AddWithValue("@CREATEDBY", chore.CreatedBy);
+                command.Parameters.AddWithValue("@CREATEDDATE", chore.CreatedDate);
+                command.Parameters.AddWithValue("@UPDATEDBY", chore.UpdatedBy);
+                command.Parameters.AddWithValue("@UPDATEDDATE", chore.UpdatedDate);
                 addedChores = command.ExecuteNonQuery();
 
                 return addedChores;
