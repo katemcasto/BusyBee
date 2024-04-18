@@ -1,0 +1,2 @@
+C:\sc\BusyBee_2.0\BusyBee\busybee.client\obj\Debug\busybee.client.esproj.CoreCompileInputs.cache
+C:\sc\BusyBee\busybee.client\obj\Debug\busybee.client.esproj.CoreCompileInputs.cache
