@@ -16,12 +16,9 @@ namespace BusyBee.Server.Controllers
         [HttpGet(Name = "GetChores")]
         public IEnumerable<Chore> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new Chore
-            {
-                Name = "Test",
-                CreatedBy = "Test"
-            })
-            .ToArray();
+            ChoreDataService dataService = new ChoreDataService();
+            List<Chore> choreList = dataService.GetChores();
+            return choreList;
         }
     }
 }
